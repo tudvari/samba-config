@@ -14,4 +14,23 @@ describe('Generator Tests', function () {
 			done()
 		})
 	})
+
+	it('Params has 1 item', function (done) {
+		Generator.generateShareConfig('testShareName', {'testkey': 'testValue'}, function (err, result) {
+			should.not.exist(err)
+			result.should.startWith('[testShareName]')
+			result.should.endWith('testkey = testValue\n')
+			done()
+		})
+	})
+
+	it('Params has more item', function (done) {
+		Generator.generateShareConfig('testShareName', {'testkey1': 'testValue1', 'testkey2': 'testValue2'}, function (err, result) {
+			should.not.exist(err)
+			result.should.startWith('[testShareName]')
+			result.should.endWith('testkey2 = testValue2\n')
+			result.should.containEql('testkey1 = testValue1\n')
+			done()
+		})
+	})
 })
