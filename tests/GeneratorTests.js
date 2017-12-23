@@ -11,8 +11,7 @@ describe('Generator Tests', function () {
 	it('generateShareConfig - ShareConfig should be started with shareName', function (done) {
 		Generator.generateShareConfig('testShareName', {}, function (err, result) {
 			should.not.exist(err)
-			result.should.startWith('[testShareName]')
-			result.should.endWith('[testShareName]\n')
+			result.should.have.property('testShareName')
 			done()
 		})
 	})
@@ -22,7 +21,7 @@ describe('Generator Tests', function () {
 		Generator.generateShareConfig('testShareName', testData1, function (err, result) {
 			should.not.exist(err)
 			var generatedIni = ini.encode(testData1, {section: 'testShareName', whitespace: true})
-			result.should.be.eql(generatedIni)
+			ini.encode(result, {whitespace: true}).should.be.eql(generatedIni)
 			done()
 		})
 	})
@@ -32,7 +31,7 @@ describe('Generator Tests', function () {
 		Generator.generateShareConfig('testShareName', testData1, function (err, result) {
 			should.not.exist(err)
 			var generatedIni = ini.encode(testData1, {section: 'testShareName', whitespace: true})
-			result.should.be.eql(generatedIni)
+			ini.encode(result, {whitespace: true}).should.be.eql(generatedIni)
 			done()
 		})
 	})

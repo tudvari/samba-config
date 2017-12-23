@@ -2,15 +2,16 @@
 
 var Generator = {
 	generateShareConfig: function (shareName, params, callback) {
-		var template = `[${shareName}]\n`
+		var generatedConfig = {}
+		generatedConfig[shareName] = {}
 
 		for (var key in params) {
-			let value = params[key]
-			template += `${key} = ${value}\n`
+			generatedConfig[shareName][key] = params[key]
 		}
 
-		return callback(null, template)
+		return callback(null, generatedConfig)
 	},
+
 	generateSection: function (shareName, fileName, existingConfig, callback) {
 		if (!shareName) return callback(new Error('shareName can\'t be emptry'))
 		existingConfig[shareName] = {}
@@ -19,7 +20,6 @@ var Generator = {
 	},
 
 	writeConfig: function (config, sectionFileName, callback) {
-
 	}
 }
 
