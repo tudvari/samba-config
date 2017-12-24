@@ -52,9 +52,11 @@ describe('Generator Tests', function () {
 	})
 	it('updateConfig - OK', function (done) {
 		// mocking config file
+
 		mockfs({
 			'/samba.conf': '[global]\n netbios name = SAMBA\n'
 		})
+
 		Generator.updateConfig('/samba.conf', 'developer.share.conf', 'developer', {path: '/srv/smb/developer'}, false, function (err, result) {
 			should.not.exist(err)
 			true.should.be.eql(fs.existsSync('developer.share.conf'))
