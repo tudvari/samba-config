@@ -63,6 +63,7 @@ module.exports = {
 	generateSection: function (shareName, fileName, existingConfig, callback) {
 		return Generator.generateSection(shareName, fileName, existingConfig, callback)
 	},
+
 	updateConfig: function (configPath, sectionFileName, sectionName, sectionParams, configReload, callback) {
 		return Generator.updateConfig(configPath, sectionFileName, sectionName, sectionParams, configReload, callback)
 	}
