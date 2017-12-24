@@ -1,6 +1,6 @@
 {
   "name": "samba-config",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Generating Samba configuration files",
   "keywords": [
     "samba, configuration, generator"
