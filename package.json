@@ -1,13 +1,16 @@
 {
   "name": "samba-config",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "Generating Samba configuration files",
+  "keywords": [
+    "samba, configuration, generator"
+  ],
   "main": "index.js",
   "scripts": {
-	"test": "./node_modules/mocha/bin/mocha tests/**Tests.js",
-	"coverage" : "istanbul cover _mocha tests/**Tests.js"
+    "test": "./node_modules/mocha/bin/mocha tests/**Tests.js",
+    "coverage": "istanbul cover _mocha tests/**Tests.js"
   },
-  "author": "",
+  "author": "Tibor Udvari<tudvari@tudvari.com>",
   "license": "MIT",
   "dependencies": {
     "async": "^2.6.0",
