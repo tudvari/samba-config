@@ -26,10 +26,11 @@ var Generator = {
 	},
 
 	updateConfig: function (configPath, sectionFileName, sectionName, sectionParams, configReload, callback) {
+		var self = this
 		async.series([
 			function (cb) {
 				// generate Share Config
-				this.generateShareConfig(sectionName, sectionParams, function (err, generatedShareConfig) {
+				self.generateShareConfig(sectionName, sectionParams, function (err, generatedShareConfig) {
 					if (err) cb(err)
 
 					fs.writeFileSync(sectionFileName, ini.stringify(generatedShareConfig))
@@ -38,9 +39,9 @@ var Generator = {
 			},
 			function (cb) {
 				// Include Share Config
-				var config = ini.parse(fs.readFileSync('./config.ini', 'utf-8'))
+				var config = ini.parse(fs.readFileSync(configPath, 'utf-8'))
 
-				this.generateSection(sectionName, sectionFileName, config, function (err, generatedConfig) {
+				self.generateSection(sectionName, sectionFileName, config, function (err, generatedConfig) {
 					if (err) cb(err)
 
 					fs.writeFileSync(sectionFileName, ini.stringify( generatedConfig))
@@ -55,6 +56,7 @@ var Generator = {
 			if (configReload) {
 				// Reload Config
 			}
+			callback(null, true)
 		})
 	}
 }
@@ -66,5 +68,8 @@ module.exports = {
 
 	generateSection: function (shareName, fileName, existingConfig, callback) {
 		return Generator.generateSection(shareName, fileName, existingConfig, callback)
+	},
+	updateConfig: function (configPath, sectionFileName, sectionName, sectionParams, configReload, callback) {
+		return Generator.updateConfig(configPath, sectionFileName, sectionName, sectionParams, configReload, callback)
 	}
 }

@@ -1,10 +1,10 @@
 'use strict'
 
-'use strict'
-
+var fs = require('fs')
 var should = require('should')
 var ini = require('ini')
 var Generator = require('../index')
+var mockfs = require('mock-fs')
 
 
 describe('Generator Tests', function () {
@@ -47,6 +47,18 @@ describe('Generator Tests', function () {
 	it('generateSection - Error - emptyShareName', function (done) {
 		Generator.generateSection(null, 'testShareName.share.conf', {}, function (err, result) {
 			should.exist(err)
+			done()
+		})
+	})
+	it('updateConfig - OK', function (done) {
+		// mocking config file
+		mockfs({
+			'/samba.conf': '[global]\n netbios name = SAMBA\n'
+		})
+		Generator.updateConfig('/samba.conf', 'developer.share.conf', 'developer', {path: '/srv/smb/developer'}, false, function (err, result) {
+			should.not.exist(err)
+			true.should.be.eql(fs.existsSync('developer.share.conf'))
+			mockfs.restore()
 			done()
 		})
 	})
