@@ -25,7 +25,7 @@ var Generator = {
 		return callback(null, existingConfig)
 	},
 
-	updateConfig: function (configPath, sectionFileName, sectionName, sectionParams, configReload, callback) {
+	updateConfig: function (configPath, sectionFileName, sectionName, sectionParams, callback) {
 		var self = this
 		async.series([
 			function (cb) {
@@ -33,7 +33,7 @@ var Generator = {
 				self.generateShareConfig(sectionName, sectionParams, function (err, generatedShareConfig) {
 					if (err) cb(err)
 
-					fs.writeFileSync(sectionFileName, ini.stringify(generatedShareConfig))
+					fs.writeFileSync(sectionFileName, ini.stringify(generatedShareConfig, { whitespace: true }))
 					cb(null, true)
 				})
 			},
@@ -44,18 +44,12 @@ var Generator = {
 				self.generateSection(sectionName, sectionFileName, config, function (err, generatedConfig) {
 					if (err) cb(err)
 
-					fs.writeFileSync(sectionFileName, ini.stringify( generatedConfig))
+					fs.writeFileSync(configPath, ini.stringify(generatedConfig, { whitespace: true }))
 					cb(null, true)
 				})
-			},
-			function (cb) {
-				// Validate Config
-				cb(null, true)
 			}], function (err, results) {
 			if (err) throw err
-			if (configReload) {
-				// Reload Config
-			}
+
 			callback(null, true)
 		})
 	}
