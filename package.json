@@ -10,7 +10,14 @@
     "test": "./node_modules/mocha/bin/mocha tests/**Tests.js",
     "coverage": "istanbul cover _mocha tests/**Tests.js"
   },
-  "author": "Tibor Udvari<tudvari@tudvari.com>",
+  "repository" :
+  { "type" : "git",
+    "url" : "https://github.com/tudvari/samba-config"
+  },
+  "author": {
+    "name" : "Tibor Udvari",
+    "email": "tudvari@tudvari.com"
+  },
   "license": "MIT",
   "dependencies": {
     "async": "^2.6.0",
