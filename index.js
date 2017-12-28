@@ -18,14 +18,6 @@ var Generator = {
 	},
 
 	generateSection: function (shareName, fileName, existingConfig) {
-		/*
-		if (!shareName) return callback(new Error('shareName can\'t be emptry'))
-
-		existingConfig[shareName] = {}
-		existingConfig[shareName]['include'] = fileName
-
-		return callback(null, existingConfig)
-		*/
 		return new Promise((resolve, reject) => {
 			if (!shareName) return reject(new Error('shareName can\'t be emptry'))
 			existingConfig[shareName] = {}
