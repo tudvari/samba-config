@@ -36,14 +36,16 @@ describe('Generator Tests', function () {
 		// should.not.exist(err)
 		'testShareName.share.conf'.should.be.eql(result.testShareName.include)
 	})
-	/*
+
 	it('generateSection - Error - emptyShareName', async function () {
-		let result = await Generator.generateSection(null, 'testShareName.share.conf', {})
-		result.catch((err) => {
-			should.exist(err)
-		})
+		try {
+			await Generator.generateSection(null, 'testShareName.share.conf', {})
+		}
+		catch (e) {
+			should.exist(e)
+		}
 	})
-	*/
+
 	/*
 	it('updateConfig - OK', function (done) {
 		// mocking config file
