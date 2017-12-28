@@ -9,7 +9,7 @@ var mockfs = require('mock-fs')
 
 describe('Generator Tests', function () {
 	it('generateShareConfig - ShareConfig should be started with shareName', async function () {
-		// should.not.exist(err)
+
 		let result = await Generator.generateShareConfig('testShareName', {})
 		result.should.have.property('testShareName')
 
@@ -17,23 +17,24 @@ describe('Generator Tests', function () {
 
 	it('generateShareConfig - Params has 1 item', async function () {
 		var testData1 = {'testkey1': 'testValue1', 'testkey2': 'testValue2'}
+
 		let result = await Generator.generateShareConfig('testShareName', testData1)
-		// should.not.exist(err)
+
 		var generatedIni = ini.encode(testData1, {section: 'testShareName', whitespace: true})
 		ini.encode(result, {whitespace: true}).should.be.eql(generatedIni)
 	})
 
 	it('generateShareConfig - Params has more item with ini', async function () {
 		var testData1 = {'testkey1': 'testValue1', 'testkey2': 'testValue2'}
+
 		let result = await Generator.generateShareConfig('testShareName', testData1)
-		// should.not.exist(err)
+
 		var generatedIni = ini.encode(testData1, {section: 'testShareName', whitespace: true})
 		ini.encode(result, {whitespace: true}).should.be.eql(generatedIni)
 	})
 
 	it('generateSection - OK', async function () {
 		let result = await Generator.generateSection('testShareName', 'testShareName.share.conf', {})
-		// should.not.exist(err)
 		'testShareName.share.conf'.should.be.eql(result.testShareName.include)
 	})
 
@@ -46,8 +47,8 @@ describe('Generator Tests', function () {
 		}
 	})
 
-	/*
-	it('updateConfig - OK', function (done) {
+
+	it('updateConfig - OK', async function () {
 		// mocking config file
 
 		mockfs({
@@ -58,15 +59,11 @@ describe('Generator Tests', function () {
 		})
 		var beforeConfStats = fs.statSync('/samba.conf')
 
-		Generator.updateConfig('/samba.conf', 'developer.share.conf', 'developer', {path: '/srv/smb/developer'}, function (err, result) {
-			should.not.exist(err)
-			true.should.be.eql(fs.existsSync('developer.share.conf'))
-			var confStats = fs.statSync('/samba.conf')
-			confStats.ctime.should.not.eql(beforeConfStats.ctime)
-			confStats.mtime.should.not.eql(beforeConfStats.mtime)
-			mockfs.restore()
-			done()
-		})
+		await Generator.updateConfig('/samba.conf', 'developer.share.conf', 'developer', {path: '/srv/smb/developer'})
+		true.should.be.eql(fs.existsSync('developer.share.conf'))
+		var confStats = fs.statSync('/samba.conf')
+		confStats.ctime.should.not.eql(beforeConfStats.ctime)
+		confStats.mtime.should.not.eql(beforeConfStats.mtime)
+		mockfs.restore()
 	})
-	*/
 })

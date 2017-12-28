@@ -1,7 +1,6 @@
 'use strict'
 
 var fs = require('fs')
-var async = require('async')
 var ini = require('ini')
 
 var Generator = {
@@ -27,39 +26,34 @@ var Generator = {
 		})
 	},
 
-	updateConfig: function (configPath, sectionFileName, sectionName, sectionParams, callback) {
+	updateConfig: function (configPath, sectionFileName, sectionName, sectionParams) {
 		var self = this
-		async.series([
-			function (cb) {
-				// generate Share Config
-				self.generateShareConfig(sectionName, sectionParams, function (err, generatedShareConfig) {
-					if (err) cb(err)
-
-					fs.writeFileSync(sectionFileName, ini.stringify(generatedShareConfig, { whitespace: true }))
-					cb(null, true)
-				})
-			},
-			function (cb) {
-				// Include Share Config
-				var config = ini.parse(fs.readFileSync(configPath, 'utf-8'))
-
-				self.generateSection(sectionName, sectionFileName, config, function (err, generatedConfig) {
-					if (err) cb(err)
-
-					fs.writeFileSync(configPath, ini.stringify(generatedConfig, { whitespace: true }))
-					cb(null, true)
-				})
-			}], function (err, results) {
-			if (err) throw err
-
-			callback(null, true)
+		var config = ini.parse(fs.readFileSync(configPath, 'utf-8'))
+		return new Promise(async (resolve, reject) => {
+			// generate Share Config
+			try {
+				let generatedShareConfig = await self.generateShareConfig(sectionName, sectionParams)
+				fs.writeFileSync(sectionFileName, ini.stringify(generatedShareConfig, { whitespace: true }))
+			}
+			catch (err) {
+				reject(err)
+			}
+			// Include Share Config
+			try {
+				let generatedConfig = await self.generateSection(sectionName, sectionFileName, config)
+				fs.writeFileSync(configPath, ini.stringify(generatedConfig, { whitespace: true }))
+			}
+			catch (err) {
+				reject(err)
+			}
+			resolve(true)
 		})
 	}
 }
 
 module.exports = {
-	generateShareConfig: async function (shareName, params, callback) {
-		return await Generator.generateShareConfig(shareName, params, callback)
+	generateShareConfig: function (shareName, params, callback) {
+		return Generator.generateShareConfig(shareName, params, callback)
 	},
 
 	generateSection: function (shareName, fileName, existingConfig, callback) {
