@@ -47,10 +47,8 @@ describe('Generator Tests', function () {
 		}
 	})
 
-
 	it('updateConfig - OK', async function () {
 		// mocking config file
-
 		mockfs({
 			'/samba.conf': mockfs.file({content: '[global]\n netbios name = SAMBA\n',
 				ctime: new Date(0),
@@ -60,10 +58,13 @@ describe('Generator Tests', function () {
 		var beforeConfStats = fs.statSync('/samba.conf')
 
 		await Generator.updateConfig('/samba.conf', 'developer.share.conf', 'developer', {path: '/srv/smb/developer'})
+
 		true.should.be.eql(fs.existsSync('developer.share.conf'))
 		var confStats = fs.statSync('/samba.conf')
+
 		confStats.ctime.should.not.eql(beforeConfStats.ctime)
 		confStats.mtime.should.not.eql(beforeConfStats.mtime)
+
 		mockfs.restore()
 	})
 })
