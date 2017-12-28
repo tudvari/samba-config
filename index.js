@@ -5,24 +5,34 @@ var async = require('async')
 var ini = require('ini')
 
 var Generator = {
-	generateShareConfig: function (shareName, params, callback) {
-		var generatedConfig = {}
-		generatedConfig[shareName] = {}
+	generateShareConfig: function (shareName, params) {
+		return new Promise((resolve, reject) => {
+			var generatedConfig = {}
+			generatedConfig[shareName] = {}
 
-		for (var key in params) {
-			generatedConfig[shareName][key] = params[key]
-		}
-
-		return callback(null, generatedConfig)
+			for (var key in params) {
+				generatedConfig[shareName][key] = params[key]
+			}
+			resolve(generatedConfig)
+		})
 	},
 
-	generateSection: function (shareName, fileName, existingConfig, callback) {
+	generateSection: function (shareName, fileName, existingConfig) {
+		/*
 		if (!shareName) return callback(new Error('shareName can\'t be emptry'))
 
 		existingConfig[shareName] = {}
 		existingConfig[shareName]['include'] = fileName
 
 		return callback(null, existingConfig)
+		*/
+		return new Promise((resolve, reject) => {
+			if (!shareName) return reject(new Error('shareName can\'t be emptry'))
+			existingConfig[shareName] = {}
+			existingConfig[shareName]['include'] = fileName
+
+			return resolve(existingConfig)
+		})
 	},
 
 	updateConfig: function (configPath, sectionFileName, sectionName, sectionParams, callback) {
@@ -56,8 +66,8 @@ var Generator = {
 }
 
 module.exports = {
-	generateShareConfig: function (shareName, params, callback) {
-		return Generator.generateShareConfig(shareName, params, callback)
+	generateShareConfig: async function (shareName, params, callback) {
+		return await Generator.generateShareConfig(shareName, params, callback)
 	},
 
 	generateSection: function (shareName, fileName, existingConfig, callback) {
