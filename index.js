@@ -52,15 +52,15 @@ var Generator = {
 }
 
 module.exports = {
-	generateShareConfig: function (shareName, params, callback) {
-		return Generator.generateShareConfig(shareName, params, callback)
+	generateShareConfig: function (shareName, params) {
+		return Generator.generateShareConfig(shareName, params)
 	},
 
-	generateSection: function (shareName, fileName, existingConfig, callback) {
-		return Generator.generateSection(shareName, fileName, existingConfig, callback)
+	generateSection: function (shareName, fileName, existingConfig) {
+		return Generator.generateSection(shareName, fileName, existingConfig)
 	},
 
-	updateConfig: function (configPath, sectionFileName, sectionName, sectionParams, configReload, callback) {
-		return Generator.updateConfig(configPath, sectionFileName, sectionName, sectionParams, configReload, callback)
+	updateConfig: function (configPath, sectionFileName, sectionName, sectionParams, configReload) {
+		return Generator.updateConfig(configPath, sectionFileName, sectionName, sectionParams, configReload)
 	}
 }
