@@ -11,7 +11,7 @@ describe('Generator Tests', function () {
 	it('generateShareConfig - ShareConfig should be started with shareName', async function () {
 
 		let result = await Generator.generateShareConfig('testShareName', {})
-		result.should.have.property('testShareName')
+		result.should.not.have.property('testShareName')
 
 	})
 
@@ -20,7 +20,7 @@ describe('Generator Tests', function () {
 
 		let result = await Generator.generateShareConfig('testShareName', testData1)
 
-		var generatedIni = ini.encode(testData1, {section: 'testShareName', whitespace: true})
+		var generatedIni = ini.encode(testData1, {whitespace: true})
 		ini.encode(result, {whitespace: true}).should.be.eql(generatedIni)
 	})
 
@@ -29,7 +29,7 @@ describe('Generator Tests', function () {
 
 		let result = await Generator.generateShareConfig('testShareName', testData1)
 
-		var generatedIni = ini.encode(testData1, {section: 'testShareName', whitespace: true})
+		var generatedIni = ini.encode(testData1, {whitespace: true})
 		ini.encode(result, {whitespace: true}).should.be.eql(generatedIni)
 	})
 

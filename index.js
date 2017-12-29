@@ -7,10 +7,9 @@ var Generator = {
 	generateShareConfig: function (shareName, params) {
 		return new Promise((resolve, reject) => {
 			var generatedConfig = {}
-			generatedConfig[shareName] = {}
 
 			for (var key in params) {
-				generatedConfig[shareName][key] = params[key]
+				generatedConfig[key] = params[key]
 			}
 			resolve(generatedConfig)
 		})
