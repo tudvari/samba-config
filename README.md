@@ -40,3 +40,7 @@ Super tiny library for configuring samba shares with Javascript.
 await Generator.updateConfig('/etc/samba/smb.conf', 'developer.share.conf', 'developer', {path: '/srv/smb/developer'})
 ```
 The main Samba configuration file is in the /etc/samba directory. The name of the new share is __develper__, the properties for this share is JSON Object: __{path: '/srv/smb/developer'}__ and the name of the share configuration file is __developer.share.conf__
+
+## Change Log
+
+Change log is available: [here](CHANGES.md)
