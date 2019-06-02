@@ -1,5 +1,9 @@
 # Change log
 
+
+## 0.1.4
+- Dependencies updated
+
 ## 0.1.1
 - Bugfix: Remove name of the share from the config fragment.
 
